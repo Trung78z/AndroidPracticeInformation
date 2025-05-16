@@ -9,33 +9,67 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hcmus.information.R;
-import com.hcmus.information.dto.UserDTO;
+import com.hcmus.information.dto.UserInfoDTO;
 
 import java.util.List;
 
-public class StudentAdapter extends ArrayAdapter<UserDTO> {
-    public StudentAdapter(Context context, List<UserDTO> items) {
+public class StudentAdapter extends ArrayAdapter<UserInfoDTO> {
+    public StudentAdapter(Context context, List<UserInfoDTO> items) {
         super(context, 0, items);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup container) {
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // ViewHolder pattern for better performance
+        ViewHolder holder;
+
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_list_item, container, false);
+            convertView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.activity_list_item, parent, false);
+
+            holder = new ViewHolder();
+            holder.studentImage = convertView.findViewById(R.id.studentImage);
+            holder.studentName = convertView.findViewById(R.id.studentName);
+            holder.studentIdMajor = convertView.findViewById(R.id.studentIdMajor);
+            holder.studentStatus = convertView.findViewById(R.id.studentStatus);
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        UserDTO currentItem = getItem(position);
+        // Get current student item
+        UserInfoDTO currentStudent = getItem(position);
 
-        ImageView studentImage = convertView.findViewById(R.id.studentImage);
-        TextView studentName = convertView.findViewById(R.id.studentName);
-        TextView studentDescription = convertView.findViewById(R.id.studentDescription);
-        TextView studentPrice = convertView.findViewById(R.id.studentGrades);
+        // Set data to views
+        if (currentStudent != null) {
+            // Set image (use placeholder if no image resource)
+            int imageRes = currentStudent.getImage() != 0
+                    ? currentStudent.getImage()
+                    : R.drawable.ic_person_placeholder;
+            holder.studentImage.setImageResource(imageRes);
 
-        studentImage.setImageResource(currentItem.getImage());
-        studentName.setText(currentItem.getName());
-        studentDescription.setText(currentItem.getDescription());
-        studentPrice.setText(String.format("GPA: %.2f", currentItem.getGrades()));
+            // Set student name
+            holder.studentName.setText(currentStudent.getFullName());
+
+            // Set student ID and major
+            String idMajor = String.format("%s - %s",
+                    currentStudent.getStudentId(),
+                    currentStudent.getMajor());
+            holder.studentIdMajor.setText(idMajor);
+
+            // Set student status with icon if needed
+            holder.studentStatus.setText(currentStudent.getStatus());
+        }
 
         return convertView;
+    }
+
+    // ViewHolder class to improve scrolling performance
+    private static class ViewHolder {
+        ImageView studentImage;
+        TextView studentName;
+        TextView studentIdMajor;
+        TextView studentStatus;
     }
 }
