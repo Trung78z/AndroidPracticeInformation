@@ -1,5 +1,6 @@
 package com.hcmus.information.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import com.hcmus.information.R;
 import com.hcmus.information.dto.UserInfoDTO;
+import com.hcmus.information.repositories.AppDatabase;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class StudentAdapter extends ArrayAdapter<UserInfoDTO> {
     public StudentAdapter(Context context, List<UserInfoDTO> items) {
@@ -33,6 +36,7 @@ public class StudentAdapter extends ArrayAdapter<UserInfoDTO> {
             holder.studentIdMajor = convertView.findViewById(R.id.studentIdMajor);
             holder.studentStatus = convertView.findViewById(R.id.studentStatus);
 
+            holder.removeDate = convertView.findViewById(R.id.removeDate);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -60,6 +64,17 @@ public class StudentAdapter extends ArrayAdapter<UserInfoDTO> {
 
             // Set student status with icon if needed
             holder.studentStatus.setText(currentStudent.getStatus());
+            holder.removeDate.setOnClickListener(v -> {
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    AppDatabase db = AppDatabase.getInstance(getContext());
+                    db.userInfoDao().deleteById(currentStudent.getStudentId());
+
+                    ((Activity) getContext()).runOnUiThread(() -> {
+                        remove(currentStudent);
+                        notifyDataSetChanged();
+                    });
+                });
+            });
         }
 
         return convertView;
@@ -71,5 +86,6 @@ public class StudentAdapter extends ArrayAdapter<UserInfoDTO> {
         TextView studentName;
         TextView studentIdMajor;
         TextView studentStatus;
+        ImageView removeDate;
     }
 }

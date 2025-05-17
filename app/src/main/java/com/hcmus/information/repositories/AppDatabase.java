@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.hcmus.information.dao.UserInfoDao;
 import com.hcmus.information.model.UserInfo;
 
-@Database(entities = {UserInfo.class}, version = 3)
+@Database(entities = {UserInfo.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
 
