@@ -2,70 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
     android:padding="12dp">
 
-    <ImageView
-        android:id="@+id/studentImage"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:contentDescription="Image"
-        android:scaleType="centerCrop"
-        android:src="@drawable/girl" />
 
     <LinearLayout
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:id="@+id/main_info"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <!-- Hiển thị tên đầy đủ -->
-        <TextView
-            android:id="@+id/studentName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Nguyễn Thành Trung" />
+        <ImageView
+            android:id="@+id/studentImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="Image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/girl" />
 
-        <!-- Hiển thị mã sinh viên và ngành học -->
-        <TextView
-            android:id="@+id/studentIdMajor"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
-            tools:text="20200381 - Điện tử viễn thông" />
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">
 
-        <!-- Hiển thị trạng thái học tập -->
-        <TextView
-            android:id="@+id/studentStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_school"
-            android:drawablePadding="4dp"
-            android:paddingTop="4dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            tools:text="Đang học" />
+            <TextView
+                android:id="@+id/studentName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Nguyễn Thành Trung" />
+
+            <TextView
+                android:id="@+id/studentIdMajor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                tools:text="20200381 - Điện tử viễn thông" />
+
+            <TextView
+                android:id="@+id/studentStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_school"
+                android:drawablePadding="4dp"
+                android:paddingTop="4dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                tools:text="Đang học" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:gravity="center"
-        >
+        android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/removeDate"
+            android:id="@+id/removeData"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
             android:contentDescription="Clear Data"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:src="@drawable/ic_clear"
             app:tint="@color/colorPrimary" />
     </LinearLayout>
