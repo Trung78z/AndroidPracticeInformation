@@ -2,6 +2,48 @@
 
 This is an Android application for managing and displaying student information using Room Database.
 
+---
+## 🎬 Application Demo & Testing
+<img src="resource_readme/video.gif" width="200" alt="Demo GIF">
+---
+
+##  🎬 Watch on Youtube
+[![Watch the video](https://img.youtube.com/vi/pQzRip2ektQ/maxresdefault.jpg)](https://youtube.com/shorts/pQzRip2ektQ)
+---
+
+## 🚀 1. Create a New Project in Android Studio
+Create a new project in **Android Studio**:
+![Create new project](resource_readme/1.png)
+
+---
+
+## 🏗️ 2. Choose Activity Type
+Select **Basic View Activity** for a simple interface:
+![Choose basic view](resource_readme/2.png)
+
+---
+
+## ✏️ 3. Name the Project and Select Android Configuration
+Enter the app name, package name, and choose **Java/Kotlin** as the language:
+![Project name](resource_readme/3.png)
+
+---
+
+## 🖥️ 4. Main Screen in Android Studio
+When you open the project, you'll see the main interface including **XML Layouts** and **MainActivity**:
+![Android Studio Coding](resource_readme/4.png)
+
+---
+## 🎨 5. UI Design (Layout)
+
+### 🔹 Main Activity
+The main screen introduces the application and displays integrated features.
+![Main Activity UI](resource_readme/a1.png)
+
+### 🔹 Detail Activity (Show Information)
+When you click on a student in the ListView on the main screen, a new screen appears showing detailed information about the selected student.
+![Detail Activity UI](resource_readme/a2.png)
+---
 ## Features
 
 - List all students with their details (name, student ID, major, status, etc.)
@@ -45,12 +87,7 @@ Uses Room with a single entity: `UserInfo`. Default data is inserted on first la
 
 ## Screenshots
 
-
-<video width="640" height="360" controls>
-  <source src="infor.webm" type="video/webm">
-  Your browser does not support the video tag.
-</video>
-
+![Database Change](resource_readme/infor.gif)
 ## License
 
 This project is licensed under the Apache License 2.0.
