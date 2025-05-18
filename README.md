@@ -45,7 +45,11 @@ Uses Room with a single entity: `UserInfo`. Default data is inserted on first la
 
 ## Screenshots
 
-_Add screenshots here if available._
+
+<video width="640" height="360" controls>
+  <source src="infor.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
 
 ## License
 
