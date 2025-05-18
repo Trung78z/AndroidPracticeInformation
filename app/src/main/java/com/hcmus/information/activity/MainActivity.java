@@ -17,7 +17,6 @@ import com.hcmus.information.adapter.StudentAdapter;
 import com.hcmus.information.dao.UserInfoDao;
 import com.hcmus.information.data.DataRom;
 import com.hcmus.information.dto.UserInfoDTO;
-import com.hcmus.information.enums.Gender;
 import com.hcmus.information.model.UserInfo;
 import com.hcmus.information.repositories.AppDatabase;
 

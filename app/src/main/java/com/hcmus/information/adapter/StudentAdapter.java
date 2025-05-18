@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.hcmus.information.R;
 import com.hcmus.information.activity.DetailActivity;
-import com.hcmus.information.activity.MainActivity;
 import com.hcmus.information.dao.UserInfoDao;
 import com.hcmus.information.dto.UserInfoDTO;
 import com.hcmus.information.repositories.AppDatabase;
@@ -62,7 +61,6 @@ public class StudentAdapter extends BaseAdapter {
             return new View(parent.getContext());
         }
 
-        // set dữ liệu vào các view trong item
         TextView studentName = convertView.findViewById(R.id.studentName);
         studentName.setText(user.getFullName());
 
