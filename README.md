@@ -37,12 +37,12 @@ When you open the project, you'll see the main interface including **XML Layouts
 ## 🎨 5. UI Design (Layout)
 
 ### 🔹 Main Activity
-The main screen introduces the application and displays integrated features.
-![Main Activity UI](resource_readme/a1.png)
+The main screen introduces the application and displays integrated features.  
+<img src="resource_readme/a1.png" alt="Main Activity UI" width="400"/>
 
 ### 🔹 Detail Activity (Show Information)
-When you click on a student in the ListView on the main screen, a new screen appears showing detailed information about the selected student.
-![Detail Activity UI](resource_readme/a2.png)
+When you click on a student in the ListView on the main screen, a new screen appears showing detailed information about the selected student.  
+<img src="resource_readme/a2.png" alt="Detail Activity UI" width="400"/>
 ---
 ## Features
 
