@@ -23,6 +23,7 @@ import com.hcmus.information.repositories.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
         SharedPreferences prefs = getSharedPreferences("my_prefs",
                 MODE_PRIVATE);
-        prefs.edit().clear().apply();
+//        prefs.edit().clear().apply();
         boolean isDbInitialized = prefs.getBoolean("db_initialized", false);
 
         if (!isDbInitialized) {
@@ -65,9 +66,25 @@ public class MainActivity extends AppCompatActivity {
         }
         this.setList(adapter, students);
         setDefault.setOnClickListener(v -> {
-            clearData(students, adapter);
-            insertData(prefs, students, adapter);
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.submit(() -> {
+                AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+                UserInfoDao userInfoDao = db.userInfoDao();
+                userInfoDao.deleteAll();
+
+                students.clear();
+                runOnUiThread(adapter::notifyDataSetChanged);
+
+                userInfoDao.insertAll(DataRom.getListUser());
+                prefs.edit().putBoolean("db_initialized", true).apply();
+
+                List<UserInfo> users = userInfoDao.getAll();
+                students.addAll(users.stream().map(UserInfoDTO::fromEntity).toList());
+
+                runOnUiThread(adapter::notifyDataSetChanged);
+            });
         });
+
 
         clearAllData.setOnClickListener(v -> {
             clearData(students, adapter);
@@ -93,16 +110,9 @@ public class MainActivity extends AppCompatActivity {
             userInfoDao.insertAll(DataRom.getListUser());
 
             prefs.edit().putBoolean("db_initialized", true).apply();
-
-            // Reload and update UI
-            List<UserInfo> users = userInfoDao.getAll();
-            students.clear();
-            for (UserInfo user : users) {
-                students.add(UserInfoDTO.fromEntity(user));
-            }
-            runOnUiThread(adapter::notifyDataSetChanged);
         });
     }
+
     private void clearData(List<UserInfoDTO> students, StudentAdapter adapter) {
         Executors.newSingleThreadExecutor().execute(() -> {
             AppDatabase db = AppDatabase.getInstance(getApplicationContext());

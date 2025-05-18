@@ -2,6 +2,8 @@ package com.hcmus.information.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,18 @@ import android.widget.Toast;
 import com.hcmus.information.R;
 import com.hcmus.information.activity.DetailActivity;
 import com.hcmus.information.activity.MainActivity;
+import com.hcmus.information.dao.UserInfoDao;
 import com.hcmus.information.dto.UserInfoDTO;
+import com.hcmus.information.repositories.AppDatabase;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class StudentAdapter extends BaseAdapter {
     private List<UserInfoDTO> users;
     private Context context;
+
 
     public StudentAdapter(Context context, List<UserInfoDTO> users) {
         this.context = context;
@@ -51,6 +58,10 @@ public class StudentAdapter extends BaseAdapter {
 
         UserInfoDTO user = getItem(position);
 
+        if (user == null) {
+            return new View(parent.getContext());
+        }
+
         // set dữ liệu vào các view trong item
         TextView studentName = convertView.findViewById(R.id.studentName);
         studentName.setText(user.getFullName());
@@ -72,12 +83,21 @@ public class StudentAdapter extends BaseAdapter {
             context.startActivity(intent);
         });
         removeData.setOnClickListener(v -> {
-            // Xóa phần tử tại vị trí hiện tại
-            users.remove(position);
-            notifyDataSetChanged();
-            Toast.makeText(context, "Đã xóa " + user.getFullName(), Toast.LENGTH_SHORT).show();
-        });
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                AppDatabase db = AppDatabase.getInstance(context.getApplicationContext());
+                UserInfoDao userInfoDao = db.userInfoDao();
 
+                userInfoDao.deleteById(user.getStudentId());
+
+                users.removeIf(u -> u.getStudentId().equals(user.getStudentId()));
+
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "Đã xóa " + user.getFullName(), Toast.LENGTH_SHORT).show();
+                });
+            });
+        });
         return convertView;
     }
 }
